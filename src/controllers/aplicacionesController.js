@@ -4,7 +4,7 @@ module.exports= {
      
     getAllAplic: async(req,res)=>{
         try{
-            const [registros] =await conn.query(`SELECT * FROM Aplicaciones`)
+            const [registros] =await conn.query(`SELECT * FROM Aplicacion`)
             res.json(registros);           
         }catch (error) {
 			throw error
@@ -21,31 +21,16 @@ module.exports= {
     },*/
 
     createAplic: async (req, res) => {
-        const sql = `INSERT INTO Aplicaciones (Nombre, Descripcion, Precio, FechaLanzamiento) VALUES (?,?,?,?);`
-        const appNueva= await conn.query(sql, [req.body.Nombre, req.body.Descripcion, req.body.Precio, req.body.FechaLanzamiento])
+        const sql = `INSERT INTO Aplicacion (NombreAplicacion, Descripcion, Precio, FechaLanzamiento, DNI, CategoriaID, logo) VALUES (?,?,?,?,?,?,?);`
+        const appNueva= await conn.query(sql, [req.body.NombreAplicacion, req.body.Descripcion, req.body.Precio, req.body.FechaLanzamiento, req.body.DNI, parseInt(req.body.CategoriaID), req.file.filename])
     /   res.redirect('/listadoApp.html')
     },
-    /*createAplic: async (req, res) => {
-        const { nombre, descripcion, precio, fechaLanzamiento } = req.body;
-        let conn;
-        try {
-            conn = await pool.getConnection();
-            const sql = 'INSERT INTO aplicaciones (Nombre, Descripcion, Precio, FechaLanzamiento) VALUES (?, ?, ?, ?)';
-            await conn.query(sql, [nombre, descripcion, precio, fechaLanzamiento]);
-            res.redirect('/listadoApp.html');
-        } catch (error) {
-            console.error('Error al crear la aplicación:', error);
-            res.status(500).send('Error al crear la aplicación');
-        } finally {
-            if (conn) conn.release();
-        }
-    },*/
-
+   
     getModificarById: async (req, res) => { //muestra la informacion a modificar
         try {
             // Realiza la consulta para obtener la información a modificar
-            const [modificar] = await conn.query(`SELECT * FROM Aplicaciones WHERE AplicacionID=?`, [req.params.id]);
-            
+            const [modificar] = await conn.query(`SELECT * FROM Aplicacion WHERE AplicacionID=?`, [req.params.id]);   
+            console.log(modificar)                    
             // Renderiza la vista 'modificar' y pasa los datos necesarios a la plantilla EJS
             res.render('modificar', {
                 tituloDePagina: 'Modificar Aplicacion Cargada',
@@ -57,11 +42,12 @@ module.exports= {
         }},
        
     updateAplicById: async (req, res) => { //realiza la modificacion
-        const sql = `UPDATE Aplicaciones SET Nombre=?, Descripcion=?, Precio=?, FechaLanzamiento=? WHERE AplicacionID=?`;
-        const { Nombre, Descripcion, Precio, FechaLanzamiento } = req.body;
+        const sql = `UPDATE Aplicacion SET NombreAplicacion=?, Descripcion=?, Precio=?, FechaLanzamiento=?, DNI=?, CategoriaID=?, logo=? WHERE AplicacionID=?`
+        const { AplicacionID, NombreAplicacion, Descripcion, Precio, FechaLanzamiento, DNI, CategoriaID, logo } = req.body
+        const appmodificado = await conn.query(sql, [NombreAplicacion, Descripcion, Precio, FechaLanzamiento, DNI, CategoriaID, logo, AplicacionID]);
         try {
-           await conn.query(sql, [Nombre, Descripcion, Precio, FechaLanzamiento, req.params.id]);
-             res.redirect('/aplicaciones');
+           await conn.query(sql, [NombreAplicacion, Descripcion, Precio, FechaLanzamiento, DNI, CategoriaID, logo,  req.params.id]);
+             res.redirect('/ListadoApp.html');
          } catch (error) {
              console.error(error);
              res.status(500).send('Error en el servidor');
@@ -73,9 +59,24 @@ module.exports= {
     },
 
     deleteAplicById: async(req, res) => {
-        const eliminado = await conn.query(`DELETE FROM Aplicaciones WHERE AplicacionID=?`, req.body.idEliminar)
+        const eliminado = await conn.query(`DELETE FROM Aplicacion WHERE AplicacionID=?`, req.body.idEliminar)
 		res.redirect('/listadoApp.html')
+    },
+
+    infoDeveloper: async(req, res)=> {
+        const developerId = req.params.id;
+
+    // Consulta SQL con INNER JOIN para obtener los datos relevantes
+    const query = `
+        SELECT d.Apellido, d.Nombre, d.DNI, a.Nombre AS NombreAplicacion, a.Precio, c.Nombre AS NombreCategoria, c.Descripcion
+        FROM Desarrollador d
+        INNER JOIN Aplicacion a ON d.DNI = a.DNI
+        INNER JOIN Categoria c ON a.CategoriaID = c.CategoriaID
+        WHERE d.DNI = ?
+    `;  
+
+        res.render('developer', { developerData: rows });
+        }
     }
 
 
-}

@@ -10,9 +10,10 @@
     <div class="container">
         <div class="column-left">
             <h2>Formulario de Ingreso de Aplicaciones</h2>
-            <form action="/aplicaciones" method="POST"id="app-form">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="Nombre" name="Nombre" required>
+            <form action="/aplicaciones" method="POST"id="app-form" enctype="multipart/form-data">
+
+                <label for="nombreAplicacion">Nombre:</label>
+                <input type="text" id="NombreAplicacion" name="NombreAplicacion" required>
 
                 <label for="descripcion">Descripción:</label>
                 <input type="text" id="Descripcion" name="Descripcion" required>
@@ -20,28 +21,34 @@
                 <label for="precio">Precio:</label>
                 <input type="number" id="Precio" name="Precio" step="0.01" required>
 
-                <label for="fechaLanzamiento">Fecha de Lanzamiento:</label>
+                <label for="FechaLanzamiento">Fecha de Lanzamiento:</label>
                 <input type="date" id="FechaLanzamiento" name="FechaLanzamiento" required>
-
-                <!-- <label for="desarrollador">Desarrollador:</label>
-                <select id="desarrollador" name="desarrollador" required>
-                    <option value="">Seleccione un desarrollador</option>
-                    <option value="1">Dev Corp</option>
-                    <option value="2">Tech Innovators</option>
-                    <option value="3">Creative Minds</option>
-                    <option value="4">Health Solutions</option>
-                    <option value="5">EduTech</option>
+                
+                <label for="DNI">Desarrollador:</label>
+                <select id="DNI" name="DNI" required>
+                    <option value="">Seleccione el DNI del desarrollador</option>
+                    <option value="1111">1111</option>
+                    <option value="2222">2222</option>
+                    <option value="3333">3333</option>
+                    <option value="4444">4444</option>
                 </select>
 
-                <label for="categoria">Categoría:</label>
-                <select id="categoria" name="categoria" required>
-                    <option value="">Seleccione una categoría</option>
-                    <option value="1">Productividad</option>
-                    <option value="2">Entretenimiento</option>
-                    <option value="3">Salud</option>
+                <label for="CategoriaID">Categoría:</label>
+                <select id="CategoriaID" name="CategoriaID" required>
+                    
+                    <option value="1">Social Media</option>
+                    <option value="2">Productividad</option>
+                    <option value="3">Juegos</option>
                     <option value="4">Educación</option>
-                    <option value="5">Finanzas</option>
-                </select> -->
+                    <option value="5">Salud y fitnes</option>
+                </select>
+
+                <label for="logo">Logo:</label>
+                <input type="text" id="Logo" name="logo">
+
+                <label for="archivo">Seleccionar archivo:</label>
+                <input type="file" id="archivo" name="archivo">
+
 
                 <button type="submit" id="submit-button">Guardar Aplicación</button>
             </form>

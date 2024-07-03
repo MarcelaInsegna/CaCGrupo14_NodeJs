@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desarrollador</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Datos del Desarrollador</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Nombre de la Aplicación</th>
+                    <th>Precio</th>
+                    <th>Nombre de la Categoría</th>
+                    <th>Descripción de la Categoría</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% developerData.forEach(row => { %>
+                    <tr>
+                        <td><%= row.apellido %></td>
+                        <td><%= row.nombre %></td>
+                        <td><%= row.NombreAplicacion %></td>
+                        <td><%= row.precio %></td>
+                        <td><%= row.NombreCategoria %></td>
+                        <td><%= row.descripcion %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-primary">Volver</a>
+    </div>
+</body>
+</html>
+

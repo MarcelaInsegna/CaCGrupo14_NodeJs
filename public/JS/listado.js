@@ -6,50 +6,31 @@ document.querySelector('body').onload = async  () => {
     listaHTML.innerHTML = '' //limpio la lista 
 	
 	datos.forEach(registro => {
+
+        const fecha = new Date(registro.FechaLanzamiento);
+        const fechaFormateada = `${('0' + fecha.getDate()).slice(-2)}/${('0' + (fecha.getMonth() + 1)).slice(-2)}/${fecha.getFullYear()}`;
+
 		//const aplicacionesHTLM 
         listaHTML.innerHTML += `
         <form method="POST" action="/aplicaciones?_metodo=DELETE" style="display:flex">
 		    
-			<h4>${registro.Nombre}</h4>
+			<h4>${registro.NombreAplicacion}</h4>
 			<h4>${registro.Descripcion}</h4>
 			<h4>${registro.Precio}</h4>
-            <h4>${registro.FechaLanzamiento}</h4>                   
+            <h4>${fechaFormateada}</h4>
+            <h4>${registro.DNI}</h4>    
+            <h4>${registro.CategoriaID}</h4>
+            <h4>${registro.logo}</h4> 
+                             
 
 			<input type="hidden" name="idEliminar" value="${registro.AplicacionID}">
+            
 			<h4><button><a href="/modificar/${registro.AplicacionID}">Modificar</a></h4>
+
 			<h4><input type="submit" value="Eliminar"></h4>
+
 		</form>`;
         //listaHTML.innerHTML+=aplicacionesHTLM;
 	})
 };
-//
 
-/*document.getElementById('app-form').onsubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = {
-        nombre: formData.get('nombre'),
-        descripcion: formData.get('descripcion'),
-        precio: formData.get('precio'),
-        fechaLanzamiento: formData.get('fechaLanzamiento')
-    };
-
-    try {
-        const response = await fetch('/aplicaciones', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        console.log(result);
-
-        // Recargar la lista de aplicaciones después de agregar una nueva
-        document.querySelector('body').onload();
-    } catch (error) {
-        console.error('Error al guardar la aplicación:', error);
-    }
-};*/
