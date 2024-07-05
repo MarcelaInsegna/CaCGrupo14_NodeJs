@@ -14,13 +14,13 @@ document.querySelector('body').onload = async  () => {
         listaHTML.innerHTML += `
         <form method="POST" action="/aplicaciones?_metodo=DELETE" style="display:flex">
 		    
-			<h4>${registro.NombreAplicacion}</h4>
-			<h4>${registro.Descripcion}</h4>
-			<h4>${registro.Precio}</h4>
-            <h4>${fechaFormateada}</h4>
-            <h4>${registro.DNI}</h4>    
-            <h4>${registro.CategoriaID}</h4>
-            <h4>${registro.logo}</h4> 
+			<h4>Nombre: ${registro.NombreAplicacion}</h4>
+			<h4> Descripcion: ${registro.Descripcion}</h4>
+			<h4>Precio: $ ${registro.Precio}</h4>
+            <h4>Fecha de Lanzamiento: ${fechaFormateada}</h4>
+            <h4>DNI desarrollador: ${registro.DNI}</h4>    
+            <h4>Categoria: ${registro.CategoriaID}</h4>
+            <h4>logo: ${registro.logo}</h4> 
                              
 
 			<input type="hidden" name="idEliminar" value="${registro.AplicacionID}">

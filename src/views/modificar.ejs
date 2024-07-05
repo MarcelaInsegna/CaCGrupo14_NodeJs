@@ -1,21 +1,23 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
 	<body>
+		<div class="container">
+			<h2 class="titulo-modificar" >Modificar Aplicacion Disponible</h2>
 		
-		<h2>Modificar Aplicacion Disponible</h2>
+			<form action="/modificar?_metodo=PUT" method="POST" >
+				<input type="text" name="NombreAplicacion" value="<%= registro.NombreAplicacion %>">
+				<input type="text" name="Descripcion" value="<%= registro.Descripcion %>">
+				<input type="number" name="Precio" value="<%= registro.Precio %>">
+				<input type="date" name="FechaLanzamiento" value="<%= registro.FechaLanzamiento.toISOString().slice(0,10) %>">
+				<input type="number" name="DNI" value="<%= registro.DNI %>">
+				<input type="text" name="CategoriaID" value="<%= registro.CategoriaID %>">
+				<input type="text" name="Logo" value="<%= registro.logo %>">
+	
+				<input type="hidden" name="AplicacionID" value="<%= registro.AplicacionID %>"><br>
+				
+				<input type="submit" value="Actualizar">
+			</form>
+		</div>
 		
-		<form action="/modificar?_metodo=PUT" method="POST">
-			<input type="text" name="NombreAplicacion" value="<%= registro.NombreAplicacion %>">
-			<input type="text" name="Descripcion" value="<%= registro.Descripcion %>">
-			<input type="number" name="Precio" value="<%= registro.Precio %>">
-            <input type="date" name="FechaLanzamiento" value="<%= registro.FechaLanzamiento.toISOString().slice(0,10) %>">
-			<input type="number" name="DNI" value="<%= registro.DNI %>">
-			<input type="text" name="CategoriaID" value="<%= registro.CategoriaID %>">
-			<input type="text" name="Logo" value="<%= registro.logo %>">
-
-			<input type="hidden" name="AplicacionID" value="<%= registro.AplicacionID %>"><br>
-			
-			<input type="submit" value="Actualizar">
-		</form>
 <%- include('partials/footer') %>
 

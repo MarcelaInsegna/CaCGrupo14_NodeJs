@@ -2,11 +2,23 @@
 <%- include('partials/header') %>
 
 <body>
-    <h1>Datos del Desarrollador</h1>
-    <p>ID: <%= developer.id %></p>
-    <p>Nombre: <%= developer.Nombre %></p>
-    <p>Tefefono: <%= developer.telefono %></p>
-    <!-- Agrega aquí los demás campos que necesites mostrar -->
-    <a href="/index.html">Volver al Inicio</a>
+    <div class="container">
+        <h1>Datos del Desarrollador</h1>
+        <p>Nombre: <%= developer.Nombre %></p>
+        <p>Apellido: <%= developer.Apellido %></p>
+        <p>Tefefono: <%= developer.telefono %></p>
+        <p>Nombre de la aplicacion: <%= developer.NombreAplicacion %></p>
+        <p>Precio: <%= developer.Precio %></p>
+        <p>Categoria: <%= developer.NombreCategoria %></p>
+
+        <!-- Agrega aquí los demás campos que necesites mostrar -->
+         
+       
+    </div>
+    <div>
+        <a href="/equipo.html" class="button">Volver al Equipo</a>
+        
+     </div>
+    
 </body>
 <%- include('partials/footer') %>

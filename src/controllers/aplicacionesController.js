@@ -53,15 +53,9 @@ module.exports= {
     },
 
     infoDeveloper: async(req, res)=> {
-        /*const devId = req.params.id;
-        const sql = 'SELECT Nombre, telefono FROM Desarrollador WHERE DNI = ?';
-        await conn.query(sql, [devId], (err, result) => {
-            if (err) throw err;
-            res.render('developer', { developer: result[0] });
-        });*/
         const devId = req.params.DNI;
     try {
-        const [rows] = await conn.query('SELECT Nombre, telefono FROM Desarrollador WHERE DNI = ?', [devId]);
+        const [rows] = await conn.query('SELECT d.DNI, d.Nombre, d.Apellido, d.Pais, d.telefono, d.FechaRegistro, a.AplicacionID, a.NombreAplicacion, a.Descripcion AS DescripcionAplicacion, a.Precio, a.FechaLanzamiento, c.CategoriaID, c.NombreCategoria, c.Descripcion AS DescripcionCategoria FROM     Desarrollador d JOIN Aplicacion a ON d.DNI = a.DNI JOIN Categoria c ON a.CategoriaID = c.CategoriaID WHERE d.DNI = ?', [devId]);
         if (rows.length === 0) {
             res.status(404).send('Desarrollador no encontrado');
             return;
@@ -74,5 +68,6 @@ module.exports= {
     }
 }
        
+/* CONSULTA EN LA BASE DE DATOS
 
-
+'SELECT d.DNI, d.Nombre, d.Apellido, d.Pais, d.telefono, d.FechaRegistro, a.AplicacionID, a.NombreAplicacion, a.Descripcion AS DescripcionAplicacion, a.Precio, a.FechaLanzamiento, c.CategoriaID, c.NombreCategoria, c.Descripcion AS DescripcionCategoria FROM     Desarrollador d JOIN Aplicacion a ON d.DNI = a.DNI JOIN Categoria c ON a.CategoriaID = c.CategoriaID WHERE d.DNI 1111'*/
