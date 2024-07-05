@@ -16,11 +16,18 @@ const storage = multer.diskStorage({ //almacenamiento, con un metodo dentro, rec
 
 const uploadFile= multer ({storage}) //objeto q tiene multer ejecutado con la conf interna para manipular los archivos q llegan
 
+/*const isLogged = (req, res, next)=>{
+	if(!req.session.userId){ //si no hay session activa redirecciona a la pag login
+		return res.redirect('/login.html')
+	}
+	next()
+}*/
 router.get('/aplicaciones', apliController.getAllAplic);
 router.post('/aplicaciones',uploadFile.single('archivo') ,apliController.createAplic);
 router.get('/modificar/:id', apliController.getModificarById);
 router.put('/modificar', apliController.updateAplicById);
 router.delete('/aplicaciones', apliController.deleteAplicById);
+
 
 router.get('/developer/:DNI', apliController.infoDeveloper)
 

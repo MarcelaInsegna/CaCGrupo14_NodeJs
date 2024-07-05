@@ -12,14 +12,7 @@ module.exports= {
 			conn.releaseConnection()
 		}
     },
-            /*res.json(aplic)
-        }catch (error){
-            throw error('error')
-        }finally {
-            conn.releaseConnection()
-        }
-    },*/
-
+            
     createAplic: async (req, res) => {
         const sql = `INSERT INTO Aplicacion (NombreAplicacion, Descripcion, Precio, FechaLanzamiento, DNI, CategoriaID, logo) VALUES (?,?,?,?,?,?,?);`
         const appNueva= await conn.query(sql, [req.body.NombreAplicacion, req.body.Descripcion, req.body.Precio, req.body.FechaLanzamiento, req.body.DNI, parseInt(req.body.CategoriaID), req.file.filename])
@@ -51,11 +44,7 @@ module.exports= {
          } catch (error) {
              console.error(error);
              res.status(500).send('Error en el servidor');
-         }
-        /*const sql = `UPDATE Aplicaciones SET Nombre=?, Descripcion=?, Precio=?, FechaLanzamiento=? WHERE AplicacionID=?`;
-        const { Nombre, Descripcion, Precio, FechaLanzamiento } = req.body;
-        const appmodificado = await conn.query(sql, [Nombre, Descripcion, Precio, FechaLanzamiento]);
-        res.redirect('/listadoApp.html')     */
+         }        
     },
 
     deleteAplicById: async(req, res) => {
@@ -64,19 +53,26 @@ module.exports= {
     },
 
     infoDeveloper: async(req, res)=> {
-        const developerId = req.params.id;
-
-    // Consulta SQL con INNER JOIN para obtener los datos relevantes
-    const query = `
-        SELECT d.Apellido, d.Nombre, d.DNI, a.Nombre AS NombreAplicacion, a.Precio, c.Nombre AS NombreCategoria, c.Descripcion
-        FROM Desarrollador d
-        INNER JOIN Aplicacion a ON d.DNI = a.DNI
-        INNER JOIN Categoria c ON a.CategoriaID = c.CategoriaID
-        WHERE d.DNI = ?
-    `;  
-
-        res.render('developer', { developerData: rows });
+        /*const devId = req.params.id;
+        const sql = 'SELECT Nombre, telefono FROM Desarrollador WHERE DNI = ?';
+        await conn.query(sql, [devId], (err, result) => {
+            if (err) throw err;
+            res.render('developer', { developer: result[0] });
+        });*/
+        const devId = req.params.DNI;
+    try {
+        const [rows] = await conn.query('SELECT Nombre, telefono FROM Desarrollador WHERE DNI = ?', [devId]);
+        if (rows.length === 0) {
+            res.status(404).send('Desarrollador no encontrado');
+            return;
         }
+        res.render('developer', { developer: rows[0] });
+    } catch (err) {
+        console.error('Error ejecutando la consulta:', err);
+        res.status(500).send('Error en el servidor');
     }
+    }
+}
+       
 
 

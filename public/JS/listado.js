@@ -25,13 +25,15 @@ document.querySelector('body').onload = async  () => {
 
 			<input type="hidden" name="idEliminar" value="${registro.AplicacionID}">
             
-			<h4><button><a href="/modificar/${registro.AplicacionID}">Modificar</a></button></h4>
+			<h4><a href="/modificar/${registro.AplicacionID}" class="button">Modificar</a></h4>
 			
 
-			<h4><input type="submit" value="Eliminar"></h4>
+			<h4><input type="submit" value="Eliminar" class="button"></h4>
 
 		</form>`;
         //listaHTML.innerHTML+=aplicacionesHTLM;
 	})
+	
 };
+
 
